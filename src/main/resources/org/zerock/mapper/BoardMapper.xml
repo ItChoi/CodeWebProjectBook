@@ -4,8 +4,29 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.zerock.mapper.BoardMapper">
+
+<sql id="criteria">
+	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+		<foreach item="type" collection="typeArr">
+			<trim prefix="OR">
+				<choose>
+					<when test="type == 'T'.toString()">
+						title like '%'||#{keyword}||'%'
+					</when>
+					<when test="type == 'C'.toString()">
+						title like '%'||#{keyword}||'%'
+					</when>
+					<when test="type == 'W'.toString()">
+						title like '%'||#{keyword}||'%'
+					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+</sql>
+
+
 <select id="getList" resultType="org.zerock.domain.BoardVO">
-	<![CDATA[
 		select 
 			bno, title, content, writer, regdate, updatedate
 		from 
@@ -15,6 +36,8 @@
 				from
 					tbl_board
 				where
+				<include refid="criteria" />
+	<![CDATA[
 					rownum <= #{pageNum} * #{amount}
 			)
 		where bno > 0
@@ -66,6 +89,11 @@
 				from
 					tbl_board
 				where 
+	]]>
+
+	<include refid="criteria" />
+	
+	<![CDATA[
 					rownum <= #{pageNum} * #{amount}
 			)
 		where
@@ -78,7 +106,8 @@
 		count(*)
 	from
 		tbl_board
-	where
+	where	
+		<include refid="criteria" />
 		bno > 0
 </select>
 
