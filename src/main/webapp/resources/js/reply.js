@@ -4,8 +4,8 @@
 
 console.log("Reply Module...........");
 
-var replyService = (function() {
-	
+var replyService = (function() {            
+	  
 	function add(reply, callback, error) {
 		console.log("reply zzzzzzzzzzzzza ...............");
 		console.log("test: " + JSON.stringify(reply));
@@ -37,7 +37,8 @@ var replyService = (function() {
 		
 		$.getJSON("/replies/pages/" + bno + "/" + page + ".json", function(data) {
 			if (callback) {
-				callback(data);
+				// callback(data);
+				callback(data.replyCnt, data.list);
 			}
 		}).fail(function(xhr, status, err) {
 			if (error) {
