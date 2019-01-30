@@ -23,6 +23,9 @@
 	
 	<context:component-scan base-package="org.zerock.controller" />
 	
-	
+	<!-- 스프링 업로드 처리는 이 타입의 객체를 빈으로 등록해야만 가능하다. (web.xml 설정은 WAS(Tomcat) 자체의 설정일 뿐)-->
+	<beans:bean id="multipartResolver"
+				class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+	</beans:bean>
 	
 </beans:beans>
