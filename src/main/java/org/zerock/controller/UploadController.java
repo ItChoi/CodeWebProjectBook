@@ -68,6 +68,8 @@ public class UploadController {
 	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile) {
 		log.info("update ajax post..........");
 		
+		log.info("uploadFile.length: " + uploadFile.length);
+		
 		List<AttachFileDTO> list = new ArrayList<>();
 		String uploadFolder = "C:\\upload";
 		
@@ -221,6 +223,9 @@ public class UploadController {
 		
 		try {
 			file = new File("C:\\upload\\" + URLEncoder.encode(fileName, "UTF-8"));
+			
+			log.info("file path: " + file.getAbsolutePath());
+	
 			
 			file.delete();
 			

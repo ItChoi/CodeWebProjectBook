@@ -118,6 +118,10 @@ $(document).ready(function() {
 		var inputFile = $("input[name='uploadFile']");
 		var files = inputFile[0].files;
 		
+		/* alert("formData: " + formData);
+		console.log("formData: ", formData); */
+		
+		
 		console.log(files);
 		
 		// add filedate to formdata
