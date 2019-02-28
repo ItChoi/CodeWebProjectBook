@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.zerock.domain.AttachFileDTO;
 import org.zerock.domain.BoardAttachVO;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
@@ -33,7 +34,6 @@ import lombok.extern.log4j.Log4j;
 public class BoardController {
 
 	private BoardService service;
-	
 	
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model) {
@@ -87,6 +87,12 @@ public class BoardController {
 	@PostMapping("/modify")
 	public String modify(BoardVO board, RedirectAttributes rttr, @ModelAttribute("cri") Criteria cri) {
 		log.info("modify: " + board);
+		
+		
+		/*for (BoardAttachVO a : board.getAttachList()) {
+			a.setBno(board.getBno());
+		}*/
+		
 		
 		if (service.modify(board)) {
 			System.out.println("성공입니닷사사삿");
