@@ -29,6 +29,15 @@
 			bno = #{bno}
 	</delete>
 	
+	<select id="getOldFiles" resultType="org.zerock.domain.boardAttachVO">
+		select
+			*
+		from
+			tbl_attach
+		where
+			uploadpath = to_char(sysdate -1, 'yyyy\mm\dd')
+	</select>
+	
 </mapper>	
 
 	
