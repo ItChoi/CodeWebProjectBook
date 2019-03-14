@@ -72,7 +72,7 @@
 			<div class="panel-body">
 				
 				<form role="form" action="/board/modify" method="post">
-					<input type="hidden" name="${_csrf.parameterNAme }" value="${_csrf.token }" />
+					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 				
 					<input type="hidden" name="pageNum" value="<c:out value='${cri.pageNum }'/>">
 					<input type="hidden" name="amount" value="<c:out value='${cri.amount }'/>">
@@ -133,7 +133,10 @@
 <%@ include file="../includes/footer.jsp" %>
  
 <script type="text/javascript">
-$(document).ready(function() {
+$(documssent).ready(function() {
+	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
 	
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 	
@@ -153,9 +156,10 @@ $(document).ready(function() {
 		return true;
 	}
 	
+	
 	$("input[type='file']").change(function(e) {
 		// append를 통해 데이터 삽입 후 request
-		var formData = new FormData();
+		var formData = new FormData();s
 		var inputFile = $("input[name='uploadFile']");
 		var files = inputFile[0].files;
 		
@@ -175,6 +179,9 @@ $(document).ready(function() {
 			contentType: false,
 			data: formData,
 			type: "POST",
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			dataType: "json",
 			success: function(result) {
 				console.log(result);

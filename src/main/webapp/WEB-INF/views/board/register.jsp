@@ -65,6 +65,45 @@
 <script type="text/javascript">
 $(document).ready(function(e) {
 	var formObj = $("form[role='form']");
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+	/* 
+	밑에 있었네....
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+	
+	$("input[type='file']").change(function(e) {
+		var formData = new FormDate();
+		var inputFile = $("input[name='uploadFile']");
+		var files = inputFile[0].files;
+		
+		for (var i = 0; i < files.length; i++) {
+			if (!checkExtension(files[i].name, files[i].size)) {
+				return false;
+			}
+			formData.append("uploadFile", files[i]);
+			
+		}
+		
+		$.ajax({
+			url: '/uploadAjaxAction',
+			processData: false,
+			contentType: false,
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			data: formData,
+			type: 'POST',
+			dataType: 'json',
+			success: function(result) {
+				console.log(result);
+				
+				showUploadResult(result); // 업로드 결과 처리 함수
+			}
+		});
+		
+	}); */
+	
 	
 	$("button[type='submit']").on("click", function(e) {
 		e.preventDefault();
@@ -105,6 +144,7 @@ $(document).ready(function(e) {
 	}
 	
 	$("input[type='file']").change(function(e) {
+		
 		// append를 통해 데이터 삽입 후 request
 		var formData = new FormData();
 		var inputFile = $("input[name='uploadFile']");
@@ -113,7 +153,7 @@ $(document).ready(function(e) {
 		console.log("formData: ", formData);
 		
 		for (var i = 0; i < files.length; i++) {
-			if (!checkExtension(files[0].name, files[i].size)) {
+			if (!checkExtension(files[i].name, files[i].size)) {
 				return false;
 			}
 			
@@ -121,17 +161,19 @@ $(document).ready(function(e) {
 		}
 		
 		$.ajax({
-			url: "/uploadAjaxAction",
+			url: '/uploadAjaxAction',
 			processData: false,
 			contentType: false,
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			data: formData,
-			type: "POST",
-			dataType: "json",
+			type: 'POST',
+			dataType: 'json',
 			success: function(result) {
 				console.log(result);
 				
 				showUploadResult(result); // 업로드 결과 처리 함수
-				
 			}
 		});
 	});
@@ -188,6 +230,9 @@ $(document).ready(function(e) {
 			data: {
 				fileName: targetFile,
 				type: type
+			},
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 			},
 			dataType: "text",
 			type: "POST",

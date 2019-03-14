@@ -56,12 +56,14 @@ public class BoardServiceImpl implements BoardService {
 		attachMapper.deleteAll(board.getBno());
 		
 		boolean modifyResult = mapper.update(board) == 1;
-		
-		if (modifyResult && board.getAttachList().size() > 0) {
-			board.getAttachList().forEach(attach -> {
-				attach.setBno(board.getBno());
-				attachMapper.insert(attach);
-			});
+		if (board != null) {
+			if (modifyResult && board.getAttachList() != null && board.getAttachList().size() > 0) {
+				System.out.println("여기도 안올리가?");
+				board.getAttachList().forEach(attach -> {
+					attach.setBno(board.getBno());
+					attachMapper.insert(attach);
+				});
+			}
 		}
 		
 		return mapper.update(board) == 1;
