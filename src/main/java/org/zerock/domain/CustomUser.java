@@ -8,7 +8,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import lombok.Getter;
+import lombok.extern.log4j.Log4j;
 
+@Log4j
 @Getter
 public class CustomUser extends User {
 
@@ -25,6 +27,8 @@ public class CustomUser extends User {
 														.stream()
 														.map(auth -> new SimpleGrantedAuthority(auth.getAuth()))
 														.collect(Collectors.toList()));
+
+		System.out.println("여기 오나???");
 		
 		this.member = vo;
 	}
